@@ -40,7 +40,7 @@
                   </Label>
                   <TextField fx:id="r_userName" layoutX="34.0" layoutY="101.0" prefHeight="30.0" prefWidth="220.0" promptText="Ussername" styleClass="textField" stylesheets="@LoginD.css" />
                   <PasswordField fx:id="r_password" layoutX="34.0" layoutY="151.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textField" stylesheets="@LoginD.css" />
-                  <Button fx:id="sing_up_button" layoutX="34.0" layoutY="309.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-button" stylesheets="@LoginD.css" text="Sign Up" />
+                  <Button fx:id="sing_up_button" layoutX="34.0" layoutY="309.0" mnemonicParsing="false" onAction="#userRegistration" prefHeight="40.0" prefWidth="220.0" styleClass="login-button" stylesheets="@LoginD.css" text="Sign Up" />
                   <ComboBox fx:id="r_question" layoutX="34.0" layoutY="200.0" prefHeight="30.0" prefWidth="220.0" promptText="Question" styleClass="textField" stylesheets="@LoginD.css" />
                   <TextField fx:id="r_answer" layoutX="34.0" layoutY="250.0" prefHeight="30.0" prefWidth="220.0" promptText="Answer" styleClass="textField" stylesheets="@LoginD.css" />
                   <AnchorPane fx:id="l_side_form" prefHeight="400.0" prefWidth="300.0" styleClass="gradiant" stylesheets="@LoginD.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

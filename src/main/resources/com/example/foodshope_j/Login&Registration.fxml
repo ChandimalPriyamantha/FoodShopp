@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.foodshope_j.LoginRegistration">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <AnchorPane fx:id="l_login_form" layoutX="300.0" prefHeight="400.0" prefWidth="300.0" styleClass="white-form" stylesheets="@LoginD.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="25.0" layoutY="70.0" styleClass="head-label" stylesheets="@LoginD.css" text="Login Account" textFill="#3a6f9e">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="l_userName" layoutX="43.0" layoutY="153.0" prefHeight="30.0" prefWidth="220.0" promptText="Ussername" styleClass="textField" stylesheets="@LoginD.css" />
+                  <PasswordField fx:id="l_passWord" layoutX="43.0" layoutY="200.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textField" stylesheets="@LoginD.css" />
+                  <Button fx:id="l_button" layoutX="43.0" layoutY="281.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-button" stylesheets="@LoginD.css" text="Login" />
+                  <Hyperlink fx:id="l_forgotPassword" layoutX="42.0" layoutY="237.0" text="Forgot Password?" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="sing_up_form" layoutY="1.0" prefHeight="400.0" prefWidth="300.0" styleClass="white-form" stylesheets="@LoginD.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="25.0" layoutY="41.0" styleClass="head-label" stylesheets="@LoginD.css" text="Register Account" textFill="#3a6f9e">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="r_userName" layoutX="34.0" layoutY="101.0" prefHeight="30.0" prefWidth="220.0" promptText="Ussername" styleClass="textField" stylesheets="@LoginD.css" />
+                  <PasswordField fx:id="r_password" layoutX="34.0" layoutY="151.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textField" stylesheets="@LoginD.css" />
+                  <Button fx:id="sing_up_button" layoutX="34.0" layoutY="309.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-button" stylesheets="@LoginD.css" text="Sign Up" />
+                  <ComboBox fx:id="r_question" layoutX="34.0" layoutY="200.0" prefHeight="30.0" prefWidth="220.0" promptText="Question" styleClass="textField" stylesheets="@LoginD.css" />
+                  <TextField fx:id="r_answer" layoutX="34.0" layoutY="250.0" prefHeight="30.0" prefWidth="220.0" promptText="Answer" styleClass="textField" stylesheets="@LoginD.css" />
+                  <AnchorPane fx:id="l_side_form" prefHeight="400.0" prefWidth="300.0" styleClass="gradiant" stylesheets="@LoginD.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="82.0" layoutY="290.0" text="Create Account">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="0.01136363997603905" endY="1.0" startY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                        <Button fx:id="l_createAccount" layoutX="40.0" layoutY="335.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="220.0" styleClass="create-button" stylesheets="@LoginD.css" text="Create new Account" />
+                        <Button fx:id="l_alreadyButton" layoutX="40.0" layoutY="335.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="220.0" styleClass="create-button" stylesheets="@LoginD.css" text="Already have an Account" visible="false" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="COFFEE" layoutX="86.0" layoutY="193.0" size="10em" text="" />
+                        <Label layoutX="40.0" layoutY="220.0" text="NILAME J Managemant System" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

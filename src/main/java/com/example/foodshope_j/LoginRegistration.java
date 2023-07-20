@@ -72,6 +72,57 @@ public class LoginRegistration {
 
     private Alert alert;
 
+
+    public void loginBtn(){
+
+        if(l_userName.getText().isEmpty() || l_passWord.getText().isEmpty()){
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Incorrect Username/Password");
+            alert.showAndWait();
+
+        }else{
+
+            String selctData = "SELECT username, password FROM employee WHERE username=? and password=?";
+
+            connect = ConnectionShopp.ConnectionDB();
+
+            try{
+
+                pts = connect.prepareStatement(selctData);
+                pts.setString(1,l_userName.getText());
+                pts.setString(2,l_passWord.getText());
+
+                st = pts.executeQuery();
+
+                if(st.next()){
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Login!");
+                    alert.showAndWait();
+
+                    l_passWord.setText("");
+                    l_userName.setText("");
+                }else{
+
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Incorrect Username/Password");
+                    alert.showAndWait();
+
+                }
+
+            }catch (Exception e){
+                   e.printStackTrace();
+            }
+        }
+    }
+
     public void userRegistration(){
         LocalDateTime currentTime = LocalDateTime.now();
         if(r_userName.getText().isEmpty() || r_password.getText().isEmpty() ||
@@ -88,10 +139,39 @@ public class LoginRegistration {
             connect = ConnectionShopp.ConnectionDB();
 
             try {
+
+                String checkUserName = "SELECT username FROM employee WHERE username = '"
+                        + r_userName.getText() + "'";
+
+                pts = connect.prepareStatement(checkUserName);
+                st = pts.executeQuery();
+
+                if (st.next()) {
+
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText(r_userName.getText() + "is already taken");
+                    alert.showAndWait();
+
+
+                } else if (r_password.getText().length() < 8) {
+
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Password should be more than 8 character");
+                    alert.showAndWait();
+
+                } else {
+
+
+
+
                 pts = connect.prepareStatement(rgQuery);
                 pts.setString(1, r_userName.getText());
                 pts.setString(2, r_password.getText());
-                pts.setString(3, (String)r_question.getSelectionModel().getSelectedItem());
+                pts.setString(3, (String) r_question.getSelectionModel().getSelectedItem());
                 pts.setString(4, r_answer.getText());
                 pts.setString(5, String.valueOf(currentTime));
 
@@ -111,14 +191,15 @@ public class LoginRegistration {
                 TranslateTransition slider = new TranslateTransition();
 
                 slider.setNode(l_side_form);
-                slider.setToX(0 );
+                slider.setToX(0);
                 slider.setDuration(Duration.seconds(.5));
 
-                slider.setOnFinished((ActionEvent e) ->{
+                slider.setOnFinished((ActionEvent e) -> {
                     l_alreadyButton.setVisible(false);
                     l_createAccount.setVisible(true);
                 });
                 slider.play();
+            }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

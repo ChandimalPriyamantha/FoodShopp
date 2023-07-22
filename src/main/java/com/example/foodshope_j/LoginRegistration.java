@@ -23,6 +23,27 @@ import java.util.List;
 
 public class LoginRegistration {
     @FXML
+    private TextField fp_answer;
+
+    @FXML
+    private Button fp_back;
+
+    @FXML
+    private AnchorPane fp_newPasswordForm;
+
+    @FXML
+    private Button fp_proceedBtn;
+
+    @FXML
+    private ComboBox<?> fp_question;
+
+    @FXML
+    private AnchorPane fp_question_form;
+
+    @FXML
+    private Button l_alreadyButton;
+
+    @FXML
     private Button l_button;
 
     @FXML
@@ -38,7 +59,22 @@ public class LoginRegistration {
     private PasswordField l_passWord;
 
     @FXML
+    private AnchorPane l_side_form;
+
+    @FXML
     private TextField l_userName;
+
+    @FXML
+    private Button pf_back;
+
+    @FXML
+    private Button pf_changedPassword;
+
+    @FXML
+    private PasswordField pf_confPassword;
+
+    @FXML
+    private PasswordField pf_newPassword;
 
     @FXML
     private TextField r_answer;
@@ -59,10 +95,7 @@ public class LoginRegistration {
     private AnchorPane sing_up_form;
 
     @FXML
-    private Button l_alreadyButton;
-
-    @FXML
-    private AnchorPane l_side_form;
+    private TextField fp_usernameProceed;
 
     private Connection connect;
     private PreparedStatement pts;
@@ -218,6 +251,160 @@ public class LoginRegistration {
         r_question.setItems(listData);
     }
 
+    public void switchForgotPass(){
+
+        fp_question_form.setVisible(true);
+        l_login_form.setVisible(false);
+
+        forgotPassQuestionList();
+    }
+
+    public void proceedBtn(){
+
+            if(fp_usernameProceed.getText().isEmpty() || fp_question.getSelectionModel().getSelectedItem() == null ||
+               fp_answer.getText().isEmpty()){
+
+                alert  =  new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            }else{
+
+                String selectData = "SELECT username, question, answer FROM employee WHERE username = ? AND question = ? AND answer = ? ";
+
+                connect = ConnectionShopp.ConnectionDB();
+
+                try {
+                    pts = connect.prepareStatement(selectData);
+                    pts.setString(1, fp_usernameProceed.getText());
+                    pts.setString(2, (String)fp_question.getSelectionModel().getSelectedItem());
+                    pts.setString(3, fp_answer.getText());
+
+                    st = pts.executeQuery();
+
+                    if(st.next()){
+
+                        fp_newPasswordForm.setVisible(true);
+                        fp_question_form.setVisible(false);
+
+
+                    }else{
+
+                        alert  =  new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Incorrect Information");
+                        alert.showAndWait();
+
+                    }
+
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+
+    }
+
+    public void changePassword(){
+
+        if(pf_newPassword.getText().isEmpty() || pf_confPassword.getText().isEmpty()){
+
+            alert  =  new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Incorrect Information");
+            alert.showAndWait();
+        }else{
+
+            if(pf_newPassword.getText().equals(pf_confPassword.getText())){
+
+                String getDate = "SELECT date FROM employee WHERE username = '"+fp_usernameProceed.getText()+"'";
+
+                connect = ConnectionShopp.ConnectionDB();
+
+                try {
+                    pts = connect.prepareStatement(getDate);
+                    st = pts.executeQuery();
+
+                    String date = null;
+                    if(st.next()){
+
+                        date = st.getString("date");
+                    }
+
+
+                    String updatePass = "UPDATE employee SET password = '"
+                            + pf_newPassword.getText()+"', question = '"+ fp_question.getSelectionModel().getSelectedItem() +"'," +
+                            "answer = '"+ fp_answer.getText()+"', date = '"+date+"' WHERE username = '"+fp_usernameProceed.getText()+"'" ;
+
+                    pts = connect.prepareStatement(updatePass);
+                    pts.executeUpdate();
+
+                    alert  =  new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully changed Password!");
+                    alert.showAndWait();
+
+                    l_login_form.setVisible(true);
+                    fp_newPasswordForm.setVisible(false);
+
+                    //TO CLEAR FIELDS
+                    pf_newPassword.setText("");
+                    pf_confPassword.setText("");
+                    fp_usernameProceed.setText("");
+                    fp_answer.setText("");
+                    fp_question.getSelectionModel().clearSelection();
+
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+            }else{
+
+                alert  =  new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Password is not matched");
+                alert.showAndWait();
+
+
+            }
+
+
+
+        }
+    }
+
+    public  void backToLoginForm(){
+           l_login_form.setVisible(true);
+           fp_question_form.setVisible(false);
+
+           fp_question.getSelectionModel().clearSelection();
+           fp_answer.setText("");
+           fp_usernameProceed.setText("");
+    }
+
+    public  void backToQuestionForm(){
+
+        fp_question_form.setVisible(true);
+        fp_newPasswordForm.setVisible(false);
+    }
+    public void forgotPassQuestionList(){
+        List<String> listQ = new ArrayList<>();
+
+        for(String data : questionList){
+            listQ.add(data);
+        }
+        ObservableList listData = FXCollections.observableArrayList(listQ);
+        fp_question.setItems(listData);
+    }
+
     //private Connection con;
 
     public void switchForm(ActionEvent event){
@@ -232,7 +419,12 @@ public class LoginRegistration {
                 l_alreadyButton.setVisible(true);
                 l_createAccount.setVisible(false);
 
+                fp_question_form.setVisible(false);
+                l_login_form.setVisible(true);
+                fp_newPasswordForm.setVisible(false);
                 userQuestionList();
+
+
             });
 
             slider.play();
@@ -244,6 +436,14 @@ public class LoginRegistration {
             slider.setOnFinished((ActionEvent e) ->{
                 l_alreadyButton.setVisible(false);
                 l_createAccount.setVisible(true);
+
+                fp_question_form.setVisible(false);
+                l_login_form.setVisible(true);
+                fp_newPasswordForm.setVisible(false);
+
+                fp_question.getSelectionModel().clearSelection();
+                fp_answer.setText("");
+                fp_usernameProceed.setText("");
             });
             slider.play();
         }

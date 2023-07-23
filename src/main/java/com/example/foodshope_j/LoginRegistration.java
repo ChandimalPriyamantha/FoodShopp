@@ -8,17 +8,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.nio.channels.ConnectionPendingException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class LoginRegistration {
@@ -132,11 +134,28 @@ public class LoginRegistration {
 
                 if(st.next()){
 
+                    UserData.username = l_userName.getText();
+
+
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Login!");
                     alert.showAndWait();
+
+                    // LINK MAIN FORM
+                    Parent root = FXMLLoader.load(getClass().getResource("mainFram.fxml"));
+
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+
+                    stage.setTitle("NILAME J Management System");
+                    stage.setMinWidth(1100);
+                    stage.setMinHeight(600);
+                    stage.setScene(scene);
+                    stage.show();
+
+                    l_login_form.getScene().getWindow().hide();
 
                     l_passWord.setText("");
                     l_userName.setText("");

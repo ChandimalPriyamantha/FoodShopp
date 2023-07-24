@@ -3,9 +3,11 @@ package com.example.foodshope_j;
 import com.example.foodshope_j.ConnectionDB.ConnectionShopp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,10 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -108,12 +112,61 @@ public class MainForm implements Initializable {
     @FXML
     private ComboBox<?> type;
 
+    @FXML
+    private TextField menu_amount;
+
+
+
+    @FXML
+    private Label menu_change;
+
+    @FXML
+    private AnchorPane menu_form;
+
+    @FXML
+    private GridPane menu_gridPane;
+
+    @FXML
+    private Button menu_pay;
+
+    @FXML
+    private TableColumn<?, ?> menu_price;
+
+    @FXML
+    private TableColumn<?, ?> menu_quantity;
+
+    @FXML
+    private Button menu_receipt;
+
+    @FXML
+    private Button menu_remove;
+
+    @FXML
+    private ScrollPane menu_scrollPane;
+
+    @FXML
+    private Label menu_total;
+
+    @FXML
+    private TableColumn<?, ?> munu_product_name;
+
+
+
+
+    @FXML
+    private AnchorPane dashbord_form;
+
+
+
+
     private Connection connect;
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
 
     private Alert alert;
+
+    private ObservableList<ProductData> cardListData = FXCollections.observableArrayList();
 
     public void inventoryAddBtn(){
 
@@ -373,6 +426,8 @@ public class MainForm implements Initializable {
         }
 
     }
+
+
     public ObservableList<ProductData> inventoryDataList(){
         ObservableList<ProductData> listData = FXCollections.observableArrayList();
 
@@ -448,6 +503,92 @@ public class MainForm implements Initializable {
         status.setItems(listDataS);
     }
 
+    public ObservableList<ProductData> menuGetData(){
+
+        String sql = "SELECT * FROM product";
+
+
+        ObservableList<ProductData> listData = FXCollections.observableArrayList();
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            ProductData productData;
+
+            while (result.next()){
+
+                productData = new ProductData(result.getInt("id"),
+                        result.getString("prod_id"),result.getString("prod_name")
+                        ,result.getString("image"),result.getDouble("price"));
+
+                listData.add(productData);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return  listData;
+    }
+
+    public void DisplayMenuCard(){
+        cardListData.clear();
+        cardListData.addAll(menuGetData());
+
+        int row = 0;
+        int column = 0;
+
+        menu_gridPane.getChildren().clear();
+        menu_gridPane.getRowConstraints().clear();
+        menu_gridPane.getColumnConstraints().clear();
+        for (int q = 0; q < cardListData.size(); q++){
+
+
+            try {
+                FXMLLoader load = new FXMLLoader();
+                load.setLocation(getClass().getResource("CardProduct.fxml"));
+                AnchorPane pane = load.load();
+                CardProductController cardC = load.getController();
+                cardC.setData(cardListData.get(q));
+
+                if(column == 3){
+                    column = 0;
+                    row += 1;
+                }
+
+                menu_gridPane.add(pane , column++, row);
+               GridPane.setMargin(pane, new Insets(10));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+    public void switchForm(ActionEvent event){
+
+        if(event.getSource() == dashbord_btn){
+            dashbord_form.setVisible(true);
+            inventory_form.setVisible(false);
+            menu_form.setVisible(false);
+        }else if(event.getSource() == inventory_btn){
+            dashbord_form.setVisible(false);
+            inventory_form.setVisible(true);
+            menu_form.setVisible(false);
+
+            inventoryTypeList();
+            inventoryStatusList();
+            inventoryShowData();
+        } else if (event.getSource() == menu_btn) {
+            dashbord_form.setVisible(false);
+            inventory_form.setVisible(false);
+            menu_form.setVisible(true);
+            DisplayMenuCard();
+        }
+    }
+
     public void logout(){
 
         try{
@@ -491,5 +632,6 @@ public class MainForm implements Initializable {
         inventoryTypeList();
         inventoryStatusList();
         inventoryShowData();
+        DisplayMenuCard();
     }
 }

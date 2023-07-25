@@ -520,8 +520,10 @@ public class MainForm implements Initializable {
             while (result.next()){
 
                 productData = new ProductData(result.getInt("id"),
-                        result.getString("prod_id"),result.getString("prod_name")
-                        ,result.getString("image"),result.getDouble("price"));
+                        result.getString("prod_id"),result.getString("prod_name"),
+                        result.getString("type")
+                        ,result.getString("image"),result.getDouble("price"),
+                        result.getDate("date"));
 
                 listData.add(productData);
             }
@@ -618,6 +620,41 @@ public class MainForm implements Initializable {
             e.printStackTrace();
         }
     }
+
+    private  int cID;
+    public void customerID(){
+        String sql = "SELECT MAX(customer_id) FROM customer";
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            if(result.next()){
+                cID = result.getInt("MAX(customer_id)");
+
+            }
+            String checkCID = "SELECT MAX(customer_id) FROM receipt";
+            prepare = connect.prepareStatement(checkCID);
+            result = prepare.executeQuery();
+            int checkID =0;
+            if(result.next()){
+                checkID = result.getInt("MAX(customer_id)");
+            }
+            if(cID == 0){
+                cID += 1;
+            }else if(cID == checkID){
+                cID += 1;
+            }
+
+            UserData.cID = cID;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void displayUsername(){
 

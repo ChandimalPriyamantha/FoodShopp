@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CardProductController implements Initializable {
@@ -41,12 +42,39 @@ public class CardProductController implements Initializable {
     private ProductData productData;
     private Image image;
 
+    private  String product_image;
+
     private SpinnerValueFactory<Integer> spin;
 
 
     private int qty;
 
     private  String prodID;
+    private  String type;
+    private String prod_image;
+    private String prod_date;
+
+    private double totalP;
+    private double pr;
+
+
+    public void setData(ProductData productData){
+
+        this.productData = productData;
+
+        prod_image = productData.getImage();
+        prod_date = String.valueOf(productData.getDate());
+        type = productData.getType();
+        prodID = productData.getProductId();
+        card_product_name.setText(productData.getProductName());
+        card_product_price.setText("LKR" + String.valueOf(productData.getPrice()));
+        String path = "File:" + productData.getImage();
+        image = new Image(path, 245, 91, false, true);
+        card_product_image.setImage(image);
+        pr = productData.getPrice();
+
+    }
+
     public  void setQuantity() {
 
         spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
@@ -56,26 +84,108 @@ public class CardProductController implements Initializable {
 
     public  void addBtn(){
 
+       MainForm mainForm = new MainForm();
+       mainForm.customerID();
+
         qty = card_spiner.getValue();
         String check = "";
-        String checkAvailable = "SELECT status FROM product WHERE product_name = '"+
-                card_product_name+"'";
+        String checkAvailable = "SELECT status FROM product WHERE prod_id = '"+
+                prodID+"'";
         connect = ConnectionShopp.ConnectionDB();
 
         try {
+
+            int checkStockNumber = 0;
+            String checkStock = "SELECT stock FROM product WHERE prod_id = '"+prodID+"'";
+
+            prepare = connect.prepareStatement(checkStock);
+            result = prepare.executeQuery();
+
+            if(result.next()){
+                checkStockNumber = result.getInt("stock");
+            }
+
+            if(checkStockNumber == 0){
+
+                String updateStock = "UPDATE product SET prod_name = '"
+                        +card_product_name.getText()+"', type= '"
+                        + type +"',stock= 0,price = " + pr
+                        +",status='Unavailable', image='"
+                        + prod_image+"',date='"+prod_date+"' WHERE prod_id = '"+prodID+"' ";
+
+                prepare = connect.prepareStatement(updateStock);
+                prepare.executeUpdate();
+            }
+
             prepare = connect.prepareStatement(checkAvailable);
             result = prepare.executeQuery();
 
             if(result.next()){
                 check = result.getString("status");
             }
-
-            if(check.equals("Available") || qty == 0){
+            if(!check.equals("Available") || qty == 0){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Something Wrong");
                 alert.showAndWait();
+            }else{
+
+
+
+               if( checkStockNumber < qty){
+
+                   Alert alert = new Alert(Alert.AlertType.ERROR);
+                   alert.setTitle("Error Message");
+                   alert.setHeaderText(null);
+                   alert.setContentText("Out of stock");
+                   alert.showAndWait();
+
+               }else{
+
+
+                   String insertData = "INSERT INTO customer " +
+                           "(customer_id,prod_name,quantity,price,date,em_username)" +
+                           "VALUES(?,?,?,?,?,?)";
+
+                   prepare = connect.prepareStatement(insertData);
+                   prepare.setString(1,String.valueOf(UserData.cID));
+                   prepare.setString(2,card_product_name.getText());
+                   prepare.setString(3,String.valueOf(qty));
+                   totalP = (qty * pr);
+                   prepare.setString(4,String.valueOf(totalP));
+
+                   Date date = new Date();
+                   java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                   prepare.setString(5,String.valueOf(sqlDate));
+                   prepare.setString(6,UserData.username);
+
+                   prepare.executeUpdate();
+
+                   int upStock = checkStockNumber - qty;
+                   prod_image = prod_image.replace("\\","\\\\");
+                   String updateStock = "UPDATE product SET prod_name = '"
+                           +card_product_name.getText()+"', type= '"
+                           + type +"',stock= " +upStock+",price = " + pr
+                           +",status='"
+                           + check+"', image='"
+                           + prod_image+"',date='"+prod_date+"' WHERE prod_id = '"+prodID+"' ";
+
+                   prepare = connect.prepareStatement(updateStock);
+                   prepare.executeUpdate();
+
+
+                   Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                   alert.setTitle("Information Message");
+                   alert.setHeaderText(null);
+                   alert.setContentText("Successfully Added!");
+                   alert.showAndWait();
+
+               }
+
+
+
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -86,20 +196,11 @@ public class CardProductController implements Initializable {
         }
     }
 
-    public void setData(ProductData productData){
 
-        this.productData = productData;
 
-        card_product_name.setText(productData.getProductName());
-        card_product_price.setText("LKR" + String.valueOf(productData.getPrice()));
-        String path = "File:" + productData.getImage();
-        image = new Image(path, 245, 91, false, true);
-        card_product_image.setImage(image);
-
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        setQuantity();
     }
 }

@@ -14,8 +14,8 @@ public class AppController extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setMinHeight(400);
         stage.setMinWidth(600);
-//        stage.setMaxHeight(400);
-//        stage.setMaxWidth(600);
+//      stage.setMaxHeight(400);
+//      stage.setMaxWidth(600);
         stage.setTitle("NILAME J Management System");
         stage.setScene(scene);
         stage.show();

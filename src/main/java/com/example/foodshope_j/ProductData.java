@@ -29,12 +29,15 @@ public class ProductData {
 
     }
 
-    public ProductData(Integer id, String productId, String productName, String image, double price) {
+    public ProductData(Integer id, String productId, String productName,String type, String image, double price, Date date) {
         this.id = id;
         this.productId = productId;
         this.productName = productName;
+        this.type = type;
         this.image = image;
         this.price = price;
+        this.date =  date;
+
     }
 
     public Integer getId() {

@@ -97,3 +97,16 @@
 
     -fx-background-color: linear-gradient(to bottom right, #0f6789, #399a8f);
 }
+
+.ComBtn{
+
+    -fx-background-color: linear-gradient(to bottom right, #3878de, #3274bd);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+}
+
+.ComBtn:hover{
+
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #399a8f);
+}

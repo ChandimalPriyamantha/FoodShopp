@@ -9,14 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63849848-7551-49ee-be53-2ea61dde9408" name="Changes" comment="Developed Main form">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardDesign.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" afterDir="false" />
+    <list default="true" id="63849848-7551-49ee-be53-2ea61dde9408" name="Changes" comment="Developed manu part">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/FoodShope_J_jar/FoodShope_J.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/FoodShope_J_jar/FoodShope_J.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/ProductData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/ProductData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/UserData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +28,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -77,9 +78,22 @@
       <recent name="E:\Real World Project\Cafe Managemant System'\FoodShope_J\src\main\resources\com\example\foodshope_j" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.AppController">
     <configuration name="AppController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.foodshope_j.AppController" />
+      <module name="FoodShope_J" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.foodshope_j.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReceiptPrinterApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.foodshope_j.ReceiptPrinterApp" />
       <module name="FoodShope_J" />
       <extension name="coverage">
         <pattern>
@@ -94,6 +108,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.AppController" />
+        <item itemvalue="Application.ReceiptPrinterApp" />
       </list>
     </recent_temporary>
   </component>
@@ -111,7 +126,9 @@
       <workItem from="1689857208541" duration="7256000" />
       <workItem from="1690002933620" duration="22446000" />
       <workItem from="1690089909789" duration="32797000" />
-      <workItem from="1690182710300" duration="15627000" />
+      <workItem from="1690182710300" duration="16360000" />
+      <workItem from="1690206302235" duration="127000" />
+      <workItem from="1690268109163" duration="23033000" />
     </task>
     <task id="LOCAL-00001" summary="Developed database connection with registration part">
       <created>1689784984239</created>
@@ -141,7 +158,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690133835322</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Developed manu part">
+      <created>1690203413911</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1690203413911</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +175,7 @@
     <MESSAGE value="Developed database connection with registration part" />
     <MESSAGE value="Develop forget password" />
     <MESSAGE value="Developed Main form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Developed Main form" />
+    <MESSAGE value="Developed manu part" />
+    <option name="LAST_COMMIT_MESSAGE" value="Developed manu part" />
   </component>
 </project>

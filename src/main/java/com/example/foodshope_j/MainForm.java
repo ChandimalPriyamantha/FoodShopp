@@ -130,10 +130,10 @@ public class MainForm implements Initializable {
     private Button menu_pay;
 
     @FXML
-    private TableColumn<?, ?> menu_price;
+    private TableColumn<ProductData, String> menu_price;
 
     @FXML
-    private TableColumn<?, ?> menu_quantity;
+    private TableColumn<ProductData, String> menu_quantity;
 
     @FXML
     private Button menu_receipt;
@@ -148,9 +148,10 @@ public class MainForm implements Initializable {
     private Label menu_total;
 
     @FXML
-    private TableColumn<?, ?> munu_product_name;
+    private TableColumn<ProductData, String> munu_product_name;
 
-
+    @FXML
+    private TableView<ProductData> menu_view_table;
 
 
     @FXML
@@ -235,6 +236,10 @@ public class MainForm implements Initializable {
 
                     inventoryShowData();
                     inventoryClearBtn();
+
+
+
+
 
 
                 }
@@ -521,7 +526,7 @@ public class MainForm implements Initializable {
 
                 productData = new ProductData(result.getInt("id"),
                         result.getString("prod_id"),result.getString("prod_name"),
-                        result.getString("type")
+                        result.getString("type"),result.getInt("stock")
                         ,result.getString("image"),result.getDouble("price"),
                         result.getDate("date"));
 
@@ -588,6 +593,8 @@ public class MainForm implements Initializable {
             inventory_form.setVisible(false);
             menu_form.setVisible(true);
             DisplayMenuCard();
+            menuShowData();
+            menuDisplayTotal();
         }
     }
 
@@ -619,6 +626,77 @@ public class MainForm implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public ObservableList<ProductData> menuGetOrder(){
+          ObservableList<ProductData> listData = FXCollections.observableArrayList();
+
+          String sql = "SELECT * FROM customer";
+
+          connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            ProductData prod;
+            while(result.next()){
+                prod = new ProductData(result.getInt("id"),
+                                       result.getString("prod_id"),
+                                       result.getString("prod_name"),
+                                       result.getString("type"),
+                                       result.getInt("quantity"),
+                                       result.getString("image"),
+                                       result.getDouble("price"),
+                                       result.getDate("date")
+                                       );
+                listData.add(prod);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+          return listData;
+    }
+
+    private  ObservableList<ProductData> menuListData;
+    public void menuShowData(){
+        menuListData = menuGetOrder();
+
+        munu_product_name.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        menu_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        menu_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        menu_view_table.setItems(menuListData);
+
+
+    }
+
+    private double totalPayment;
+    public void menuGetTotal(){
+        customerID();
+        String total = "SELECT SUM(price) FROM customer WHERE customer_id =" + cID;
+
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(total);
+            result = prepare.executeQuery();
+
+            if(result.next()){
+                totalPayment = result.getDouble("SUM(price)");
+            }
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void menuDisplayTotal(){
+
+        menuGetTotal();
+        menu_total.setText("LKR " + totalPayment);
     }
 
     private  int cID;
@@ -670,5 +748,9 @@ public class MainForm implements Initializable {
         inventoryStatusList();
         inventoryShowData();
         DisplayMenuCard();
+
+        menuGetOrder();
+        menuDisplayTotal();
+        menuShowData();
     }
 }

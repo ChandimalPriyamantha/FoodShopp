@@ -11,13 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="63849848-7551-49ee-be53-2ea61dde9408" name="Changes" comment="Developed manu part">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/AppController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/ProductData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/ProductData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/UserData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +124,8 @@
       <workItem from="1690089909789" duration="32797000" />
       <workItem from="1690182710300" duration="16360000" />
       <workItem from="1690206302235" duration="127000" />
-      <workItem from="1690268109163" duration="23033000" />
+      <workItem from="1690268109163" duration="23225000" />
+      <workItem from="1690452509821" duration="17169000" />
     </task>
     <task id="LOCAL-00001" summary="Developed database connection with registration part">
       <created>1689784984239</created>
@@ -165,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690203413911</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Developed manu part">
+      <created>1690322603912</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1690322603912</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

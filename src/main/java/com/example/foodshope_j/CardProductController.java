@@ -143,27 +143,31 @@ public class CardProductController implements Initializable {
 
                }else{
 
+                   //prod_image = prod_image.replace("\\","\\\\");
 
                    String insertData = "INSERT INTO customer " +
-                           "(customer_id,prod_name,quantity,price,date,em_username)" +
-                           "VALUES(?,?,?,?,?,?)";
+                           "(customer_id,prod_id,type,prod_name,quantity,price,date,image,em_username)" +
+                           "VALUES(?,?,?,?,?,?,?,?,?)";
 
                    prepare = connect.prepareStatement(insertData);
                    prepare.setString(1,String.valueOf(UserData.cID));
-                   prepare.setString(2,card_product_name.getText());
-                   prepare.setString(3,String.valueOf(qty));
+                   prepare.setString(2,prodID);
+                   prepare.setString(3,type);
+                   prepare.setString(4,card_product_name.getText());
+                   prepare.setString(5,String.valueOf(qty));
                    totalP = (qty * pr);
-                   prepare.setString(4,String.valueOf(totalP));
+                   prepare.setString(6,String.valueOf(totalP));
 
                    Date date = new Date();
                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                   prepare.setString(5,String.valueOf(sqlDate));
-                   prepare.setString(6,UserData.username);
+                   prepare.setString(7,String.valueOf(sqlDate));
+                   prepare.setString(8,"null");
+                   prepare.setString(9,UserData.username);
 
                    prepare.executeUpdate();
 
                    int upStock = checkStockNumber - qty;
-                   prod_image = prod_image.replace("\\","\\\\");
+
                    String updateStock = "UPDATE product SET prod_name = '"
                            +card_product_name.getText()+"', type= '"
                            + type +"',stock= " +upStock+",price = " + pr
@@ -180,6 +184,10 @@ public class CardProductController implements Initializable {
                    alert.setHeaderText(null);
                    alert.setContentText("Successfully Added!");
                    alert.showAndWait();
+
+
+                   mainForm.menuGetTotal();
+
 
                }
 

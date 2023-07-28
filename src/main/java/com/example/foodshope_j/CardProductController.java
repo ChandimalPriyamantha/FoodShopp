@@ -143,7 +143,7 @@ public class CardProductController implements Initializable {
 
                }else{
 
-                   //prod_image = prod_image.replace("\\","\\\\");
+                   prod_image = prod_image.replace("\\","\\\\");
 
                    String insertData = "INSERT INTO customer " +
                            "(customer_id,prod_id,type,prod_name,quantity,price,date,image,em_username)" +

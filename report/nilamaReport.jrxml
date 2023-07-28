@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nilamaReport" pageWidth="226" pageHeight="425" columnWidth="186" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4b123f25-a2ac-40f2-858a-c5f2f558dc76">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
+	<queryString language="SQL">
+		<![CDATA[select * from customer]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="customer_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="prod_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="prod_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="prod_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="prod_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="type"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="image" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="image"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="em_username" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="em_username"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<group name="id">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
+	<group name="customer_id">
+		<groupExpression><![CDATA[$F{customer_id}]]></groupExpression>
+	</group>
+	<group name="prod_id">
+		<groupExpression><![CDATA[$F{prod_id}]]></groupExpression>
+	</group>
+	<group name="prod_name">
+		<groupExpression><![CDATA[$F{prod_name}]]></groupExpression>
+	</group>
+	<group name="type">
+		<groupExpression><![CDATA[$F{type}]]></groupExpression>
+	</group>
+	<group name="quantity">
+		<groupExpression><![CDATA[$F{quantity}]]></groupExpression>
+	</group>
+	<group name="price">
+		<groupExpression><![CDATA[$F{price}]]></groupExpression>
+	</group>
+	<group name="date">
+		<groupExpression><![CDATA[$F{date}]]></groupExpression>
+	</group>
+	<group name="image">
+		<groupExpression><![CDATA[$F{image}]]></groupExpression>
+	</group>
+	<group name="em_username">
+		<groupExpression><![CDATA[$F{em_username}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="0" width="164" height="30" uuid="908d3117-eda8-43ac-9610-18fbedcb8c04"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[NILAME (J) HOTEL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" uuid="170fcf95-1907-42a2-9018-5ffac4a54506"/>
+				<text><![CDATA[Customer ID :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="0" width="30" height="20" uuid="fa4fc670-3fac-4474-98da-bbe1e746f00e"/>
+				<textFieldExpression><![CDATA[$F{customer_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-3" width="58" height="20" uuid="811f69fc-8dfb-4583-b1c6-08d855700063"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="-3" width="42" height="20" uuid="44011997-17eb-48ed-8368-ef78798d1a20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="-3" width="40" height="20" uuid="eab80400-f84c-4758-89b1-d21447578ae9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="-3" width="44" height="20" uuid="f75c7daf-ddc0-4c0b-b69b-040ee961f19f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Price (LKR)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="58" height="20" uuid="79161293-f176-4867-ad34-b7eab3853758"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prod_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="0" width="42" height="20" uuid="00b0e721-2817-4135-9e4d-2da933cea661"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="40" height="20" uuid="88a7175e-4203-43cd-98c3-32a76e45ea08"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="44" height="20" uuid="5197ed7e-8a56-4886-ab4e-e4c44fe402a9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

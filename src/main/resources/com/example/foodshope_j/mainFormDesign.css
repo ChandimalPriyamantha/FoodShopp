@@ -93,6 +93,30 @@
     -fx-font-size: 14px;
 }
 
+.deleteBtn{
+
+    -fx-background-color: linear-gradient(to bottom right, #bb0d28, #bb0939);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+}
+
+.updateBtn{
+
+    -fx-background-color: linear-gradient(to bottom right, #f3c709, #e0bb08);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+}
+
+.clearBtn{
+
+    -fx-background-color: linear-gradient(to bottom right, #3274bd, #3878de);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+}
+
 .btn:hover{
 
     -fx-background-color: linear-gradient(to bottom right, #0f6789, #399a8f);

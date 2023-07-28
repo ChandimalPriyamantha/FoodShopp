@@ -115,7 +115,11 @@ public class MainForm implements Initializable {
     @FXML
     private TextField menu_amount;
 
+    @FXML
+    private Button filter_buttn;
 
+    @FXML
+    private ComboBox<?> filter_list;
 
     @FXML
     private Label menu_change;
@@ -593,10 +597,12 @@ public class MainForm implements Initializable {
             inventory_form.setVisible(false);
             menu_form.setVisible(true);
             DisplayMenuCard();
-            menuShowData();
+            menuShowOrderData();
             menuDisplayTotal();
         }
     }
+
+
 
     public void logout(){
 
@@ -629,9 +635,10 @@ public class MainForm implements Initializable {
     }
 
     public ObservableList<ProductData> menuGetOrder(){
+        customerID();
           ObservableList<ProductData> listData = FXCollections.observableArrayList();
 
-          String sql = "SELECT * FROM customer";
+          String sql = "SELECT * FROM customer WHERE customer_id = " + cID;
 
           connect = ConnectionShopp.ConnectionDB();
 
@@ -658,15 +665,28 @@ public class MainForm implements Initializable {
           return listData;
     }
 
-    private  ObservableList<ProductData> menuListData;
-    public void menuShowData(){
-        menuListData = menuGetOrder();
+    private  ObservableList<ProductData> menuOrderListData;
+    public void menuShowOrderData(){
+        menuOrderListData = menuGetOrder();
 
         munu_product_name.setCellValueFactory(new PropertyValueFactory<>("productName"));
         menu_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         menu_price.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        menu_view_table.setItems(menuListData);
+        menu_view_table.setItems(menuOrderListData);
+
+
+    }
+
+    private int getID;
+    public void menuSelectOrder(){
+
+        ProductData prod = menu_view_table.getSelectionModel().getSelectedItem();
+        int num = menu_view_table.getSelectionModel().getSelectedIndex();
+
+        if((num-1)<-1) return;
+
+        getID = prod.getId();
 
 
     }
@@ -699,6 +719,177 @@ public class MainForm implements Initializable {
         menu_total.setText("LKR " + totalPayment);
     }
 
+
+
+    private double amount;
+    private double change;
+    public void menuAmount(){
+        menuGetTotal();
+
+        if(menu_amount.getText().isEmpty() || totalPayment == 0){
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid");
+            alert.showAndWait();
+        }else{
+
+            amount = Double.parseDouble(menu_amount.getText());
+
+
+                change = (amount - totalPayment);
+                menu_change.setText("LKR " + change);
+                System.out.println(change);
+
+        }
+    }
+
+    public void menuPayBtn(){
+        if(totalPayment ==0){
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid");
+            alert.showAndWait();
+        }else{
+            String insertPay = "INSERT INTO receipt (customer_id, total, date,em_username)" +
+                    "VALUES(?,?,?,?)";
+
+            connect = ConnectionShopp.ConnectionDB();
+
+            try{
+                if(amount == 0){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Something Wrong.");
+                    alert.showAndWait();
+                }else{
+
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure?");
+                    Optional<ButtonType> optional = alert.showAndWait();
+
+
+                    if(optional.get().equals(ButtonType.OK)){
+                        menuGetTotal();
+                        customerID();
+                        prepare = connect.prepareStatement(insertPay);
+                        prepare.setString(1,String.valueOf(cID));
+                        prepare.setString(2,String.valueOf(totalPayment));
+
+                        Date date = new Date();
+                        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                        prepare.setString(3,String.valueOf(sqlDate));
+                        prepare.setString(4,UserData.username);
+
+                        prepare.executeUpdate();
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successful");
+                        alert.showAndWait();
+
+                        menuShowOrderData();
+                        menuRestart();
+                    }else {
+                        alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Information Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Cancelled");
+                        alert.showAndWait();
+                    }
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void menuRemoveBtn(){
+
+        if(getID == 0){
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select tht item you want to remove.");
+            alert.showAndWait();
+        }
+
+        String deleteData = "DELETE FROM customer WHERE id = " + getID;
+        connect = ConnectionShopp.ConnectionDB();
+
+        try{
+
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete this order?");
+            Optional<ButtonType> optional = alert.showAndWait();
+
+            if(optional.get().equals(ButtonType.OK)){
+
+                prepare = connect.prepareStatement(deleteData);
+                prepare.executeUpdate();
+            }
+
+
+            menuShowOrderData();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void menuRestart(){
+
+        totalPayment = 0;
+        change = 0;
+        amount = 0;
+        menu_total.setText("LKR 0.0");
+        menu_amount.setText("");
+        menu_change.setText("LKR 0.0");
+    }
+
+    public ObservableList<ProductData> menuFilter(){
+
+        String sql = "SELECT * FROM product";
+
+
+        ObservableList<ProductData> filterData = FXCollections.observableArrayList();
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            ProductData productData;
+
+            while (result.next()){
+
+                productData = new ProductData(result.getInt("id"),
+                        result.getString("prod_id"),result.getString("prod_name"),
+                        result.getString("type"),result.getInt("stock")
+                        ,result.getString("image"),result.getDouble("price"),
+                        result.getDate("date"));
+
+                filterData.add(productData);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return  filterData;
+
+    }
     private  int cID;
     public void customerID(){
         String sql = "SELECT MAX(customer_id) FROM customer";
@@ -751,6 +942,8 @@ public class MainForm implements Initializable {
 
         menuGetOrder();
         menuDisplayTotal();
-        menuShowData();
+        menuShowOrderData();
+
+
     }
 }

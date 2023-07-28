@@ -1,5 +1,7 @@
 package com.example.foodshope_j;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import com.example.foodshope_j.ConnectionDB.ConnectionShopp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,16 +20,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+
+
+import java.util.*;
+
+
 
 public class MainForm implements Initializable {
 
@@ -794,7 +800,7 @@ public class MainForm implements Initializable {
                         alert.showAndWait();
 
                         menuShowOrderData();
-                        menuRestart();
+
                     }else {
                         alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("Information Message");
@@ -810,7 +816,32 @@ public class MainForm implements Initializable {
 
         }
     }
+public void menuReceiptBtn(){
 
+        if(totalPayment == 0 || menu_amount.getText().isEmpty()){
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Order first.");
+            alert.showAndWait();
+        }else {
+
+            HashMap map = new HashMap();
+            map.put("getReceipt",(cID-1));
+            try {
+                JasperDesign jasperDesign = JRXmlLoader.load("E:\\Real World Project\\Cafe Managemant System'\\FoodShope_J\\report\\nilamaReport.jrxml");
+                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,map,connect);
+
+                JasperViewer.viewReport(jasperPrint,false);
+                menuRestart();
+            } catch (JRException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+}
     public void menuRemoveBtn(){
 
         if(getID == 0){

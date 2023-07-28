@@ -10,14 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63849848-7551-49ee-be53-2ea61dde9408" name="Changes" comment="Developed manu part">
-      <change afterPath="$PROJECT_DIR$/report/nilamaReport.jasper" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/report/nilamaReport.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/FoodShope_J_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/FoodShope_J_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/FoodShope_J_jar/FoodShope_J.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/FoodShope_J_jar/FoodShope_J.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CardProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report/nilamaReport.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/report/nilamaReport.jrxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +65,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.5443038",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
@@ -135,7 +133,7 @@
       <workItem from="1690268109163" duration="23225000" />
       <workItem from="1690452509821" duration="17169000" />
       <workItem from="1690477946147" duration="1053000" />
-      <workItem from="1690526722072" duration="16366000" />
+      <workItem from="1690526722072" duration="21922000" />
     </task>
     <task id="LOCAL-00001" summary="Developed database connection with registration part">
       <created>1689784984239</created>
@@ -186,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690478097734</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Developed manu part">
+      <created>1690552083757</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1690552083758</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

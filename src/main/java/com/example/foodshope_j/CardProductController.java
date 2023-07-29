@@ -107,11 +107,7 @@ public class CardProductController implements Initializable {
 
             if(checkStockNumber == 0){
 
-                String updateStock = "UPDATE product SET prod_name = '"
-                        +card_product_name.getText()+"', type= '"
-                        + type +"',stock= 0,price = " + pr
-                        +",status='Unavailable', image='"
-                        + prod_image+"',date='"+prod_date+"' WHERE prod_id = '"+prodID+"' ";
+                String updateStock = "UPDATE product SET status='Unavailable' WHERE prod_id = '"+prodID+"' ";
 
                 prepare = connect.prepareStatement(updateStock);
                 prepare.executeUpdate();
@@ -168,12 +164,14 @@ public class CardProductController implements Initializable {
 
                    int upStock = checkStockNumber - qty;
 
-                   String updateStock = "UPDATE product SET prod_name = '"
-                           +card_product_name.getText()+"', type= '"
-                           + type +"',stock= " +upStock+",price = " + pr
-                           +",status='"
-                           + check+"', image='"
-                           + prod_image+"',date='"+prod_date+"' WHERE prod_id = '"+prodID+"' ";
+//                   String updateStock = "UPDATE product SET prod_name = '"
+//                           +card_product_name.getText()+"', type= '"
+//                           + type +"',stock= " +upStock+",price = " + pr
+//                           +",status='"
+//                           + check+"', image='"
+//                           + prod_image+"',date='"+prod_date+"' WHERE prod_id = '"+prodID+"' ";
+
+                   String updateStock = "UPDATE product SET stock= '" +upStock+"' WHERE prod_id = '"+prodID+"' ";
 
                    prepare = connect.prepareStatement(updateStock);
                    prepare.executeUpdate();

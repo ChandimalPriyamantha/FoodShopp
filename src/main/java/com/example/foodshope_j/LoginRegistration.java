@@ -3,6 +3,7 @@ package com.example.foodshope_j;
 import java.sql.Connection;
 
 import com.example.foodshope_j.ConnectionDB.ConnectionShopp;
+import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -20,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +103,12 @@ public class LoginRegistration {
     @FXML
     private TextField fp_usernameProceed;
 
+    @FXML
+    private Label dateTimeLabel;
+
+
+
+
     private Connection connect;
     private PreparedStatement pts;
     private ResultSet st;
@@ -143,17 +153,29 @@ public class LoginRegistration {
                     alert.setContentText("Successfully Login!");
                     alert.showAndWait();
 
+
                     // LINK MAIN FORM
                     Parent root = FXMLLoader.load(getClass().getResource("mainFram.fxml"));
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
 
-                    stage.setTitle("NILAME J Management System");
+
+
+
+
+                    stage.setTitle("ARACHCHI (J) MANAGEMENT SYSTEM");
+                    Image image = new Image(getClass().getResourceAsStream("/appIcon.png"));
+                    stage.getIcons().add(image);
                     stage.setMinWidth(1100);
                     stage.setMinHeight(600);
                     stage.setScene(scene);
                     stage.show();
+
+
+
+
+
 
                     l_login_form.getScene().getWindow().hide();
 
@@ -174,6 +196,9 @@ public class LoginRegistration {
             }
         }
     }
+
+
+
 
     public void userRegistration(){
         LocalDateTime currentTime = LocalDateTime.now();

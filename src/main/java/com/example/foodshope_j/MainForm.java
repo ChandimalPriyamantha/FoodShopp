@@ -30,6 +30,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.PublicKey;
 import java.sql.*;
 import java.util.Date;
 
@@ -208,6 +209,26 @@ public class MainForm implements Initializable {
 
     @FXML
     private TableView<ProductData> menu_view_table;
+
+
+    @FXML
+    private Button add_catogory_btn;
+
+    @FXML
+    private TextField category_id;
+
+    @FXML
+    private TextField category_name;
+
+    @FXML
+    private Button clear_catogory_btn;
+
+
+    @FXML
+    private Button delete_category_btn;
+
+    @FXML
+    private Button update_catogory;
 
 
     private Connection connect;
@@ -429,6 +450,84 @@ public class MainForm implements Initializable {
         }
     }
 
+    public void addCategory(){
+
+        if(category_id.getText().isEmpty() || category_name.getText().isEmpty()){
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        }else{
+            String checkProdID = "SELECT category_id FROM category WHERE category_id ='"
+                    +category_id.getText()+"'";
+
+            connect = ConnectionShopp.ConnectionDB();
+
+
+            try {
+                statement = connect.createStatement();
+                result = statement.executeQuery(checkProdID);
+
+                if(result.next()){
+
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText(product_id.getText() + "is already taken");
+                    alert.showAndWait();
+
+                }else{
+
+                    String insertData = "INSERT INTO category" +
+                            "(category_id, category_name,date)" +
+                            "VALUES(?,?,?)";
+
+                    prepare = connect.prepareStatement(insertData);
+                    prepare.setString(1, category_id.getText());
+                    prepare.setString(2, category_name.getText());
+
+                    Date date = new Date();
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                    prepare.setString(3, String.valueOf((sqlDate)));
+
+                    prepare.executeUpdate();
+
+
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Added!");
+                    alert.showAndWait();
+
+                    //inventoryShowData();
+                    categoryClear();
+
+
+
+
+
+
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+    }
+
+    public void categoryClear(){
+
+        category_id.setText("");
+        category_name.setText("");
+    }
+
     public  void InventoryUpdate(){
 
         if(product_id.getText().isEmpty() || product_name.getText().isEmpty() || type.getSelectionModel().getSelectedItem() == null
@@ -498,6 +597,66 @@ public class MainForm implements Initializable {
 
         }
 
+    }
+
+    public void categoryUpdate(){
+        if(category_id.getText().isEmpty() || category_name.getText().isEmpty()){
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        }else{
+
+
+
+            String updateDate = "UPDATE product SET "
+                    +"p = '"+ product_id.getText()+"',prod_name ='"
+                    + product_name.getText()+"', WHERE id = " + UserData.id;
+
+            connect = ConnectionShopp.ConnectionDB();
+
+            try {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE product ID:" + product_id.getText()+"?");
+                Optional<ButtonType> optional = alert.showAndWait();
+
+                if(optional.get().equals(ButtonType.OK)){
+
+                    prepare = connect.prepareStatement(updateDate);
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+
+                    inventoryShowData();
+                    inventoryClearBtn();
+                }else{
+
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cancelled");
+
+
+                }
+
+                prepare = connect.prepareStatement(updateDate);
+
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
     public void inventoryDeleteBtn(){
@@ -872,7 +1031,10 @@ public class MainForm implements Initializable {
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
-                stage.setTitle("NILAME J Management System");
+                stage.setTitle("ARACHCHI (J) MANAGEMENT SYSTEM");
+
+                Image image = new Image(getClass().getResourceAsStream("/appIcon.png"));
+                stage.getIcons().add(image);
 
                 stage.setScene(scene);
                 stage.show();
@@ -1081,6 +1243,7 @@ public void menuReceiptBtn(){
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,map,connect);
 
                 JasperViewer.viewReport(jasperPrint,false);
+                //JasperPrintManager.printReport(jasperPrint, true);
                 menuRestart();
             } catch (JRException e) {
                 throw new RuntimeException(e);
@@ -1266,6 +1429,8 @@ public void menuReceiptBtn(){
         dashboardNSP();
         dashboardCustomerChart();
         dashboardIncomeChart();
+
+
 
 
     }

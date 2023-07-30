@@ -21,8 +21,8 @@
 
 .nav-btn:hover{
 
-    -fx-background-color: #3878de;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #a4a4a4;
+    -fx-text-fill: #101010;
 }
 
 .logout{
@@ -115,6 +115,18 @@
     -fx-cursor: hand;
     -fx-text-fill: #fff;
     -fx-font-size: 14px;
+}
+.clearBtn:hover{
+
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #2371da);
+}
+.updateBtn:hover{
+
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #f3c709);
+}
+.deleteBtn:hover{
+
+    -fx-background-color: linear-gradient(to bottom right, #0f6789, #d9013c);
 }
 
 .btn:hover{

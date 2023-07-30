@@ -129,21 +129,21 @@ WHERE
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="47" height="20" uuid="1ce1f972-b247-4e47-86be-4844c491237f"/>
+				<reportElement x="0" y="0" width="70" height="20" uuid="1ce1f972-b247-4e47-86be-4844c491237f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Product Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="47" y="0" width="47" height="20" uuid="6f2a728d-fc1e-4e9e-b5b8-6b24d66924ea"/>
+				<reportElement x="70" y="0" width="40" height="20" uuid="6f2a728d-fc1e-4e9e-b5b8-6b24d66924ea"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="94" y="0" width="43" height="20" uuid="2f6e6dd2-dab5-4777-a9bd-24539c98a4fa"/>
+				<reportElement x="110" y="0" width="27" height="20" uuid="2f6e6dd2-dab5-4777-a9bd-24539c98a4fa"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true"/>
 				</textElement>
@@ -173,21 +173,21 @@ WHERE
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="47" height="11" uuid="f234bdec-855f-446c-b982-c0fc136175c7"/>
+				<reportElement x="0" y="0" width="70" height="11" uuid="f234bdec-855f-446c-b982-c0fc136175c7"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer_prod_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="47" y="0" width="47" height="11" uuid="eb67ea2d-e262-48a5-a218-9ba3e37ea64a"/>
+				<reportElement x="70" y="0" width="40" height="11" uuid="eb67ea2d-e262-48a5-a218-9ba3e37ea64a"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer_type}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="0" width="43" height="11" uuid="19806ee3-e2d2-421b-82c8-77ea1e2dd174"/>
+				<reportElement x="110" y="0" width="27" height="11" uuid="19806ee3-e2d2-421b-82c8-77ea1e2dd174"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>

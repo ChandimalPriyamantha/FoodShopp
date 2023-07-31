@@ -11,13 +11,15 @@ public class ProductData {
     private String status;
     private String image;
 
+    private String category_id;
+
     private int quantity;
 
     private double price;
     private Date date;
 
     private String type;
-    public ProductData(Integer id, String productId, String productName, String type, Integer stock, String status, String image, double price, Date date) {
+    public ProductData(Integer id, String productId, String productName, String type, Integer stock, String status, String image, double price, Date date,String category_id) {
         this.id = id;
         this.productId = productId;
         this.productName = productName;
@@ -27,6 +29,7 @@ public class ProductData {
         this.image = image;
         this.price = price;
         this.date = date;
+        this.category_id = category_id;
 
 
     }
@@ -41,6 +44,15 @@ public class ProductData {
         this.price = price;
         this.date =  date;
 
+
+    }
+
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
     }
 
     public Integer getId() {

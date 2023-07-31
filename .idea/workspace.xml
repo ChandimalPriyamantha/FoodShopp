@@ -9,15 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63849848-7551-49ee-be53-2ea61dde9408" name="Changes" comment="Developed manu part">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/appIcon.png" afterDir="false" />
+    <list default="true" id="63849848-7551-49ee-be53-2ea61dde9408" name="Changes" comment="Developed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/CategoryData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/FoodShope_J_jar/FoodShope_J.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/FoodShope_J_jar/FoodShope_J.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report/report.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/report/report.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/LoginRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/LoginRegistration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/MainForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/ProductData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/ProductData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/foodshope_j/UserData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/CardProduct.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/Login&amp;Registration.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/Login&amp;Registration.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/foodshope_j/mainFormDesign.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +175,11 @@
       <workItem from="1690608227241" duration="18739000" />
       <workItem from="1690634535229" duration="1348000" />
       <workItem from="1690695673550" duration="2004000" />
-      <workItem from="1690700479635" duration="16304000" />
+      <workItem from="1690700479635" duration="16747000" />
+      <workItem from="1690735995817" duration="312000" />
+      <workItem from="1690736816173" duration="355000" />
+      <workItem from="1690780937555" duration="5392000" />
+      <workItem from="1690793039438" duration="6704000" />
     </task>
     <task id="LOCAL-00001" summary="Developed database connection with registration part">
       <created>1689784984239</created>
@@ -246,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690634214715</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Developed">
+      <created>1690725046907</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1690725046908</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +269,7 @@
     <MESSAGE value="Develop forget password" />
     <MESSAGE value="Developed Main form" />
     <MESSAGE value="Developed manu part" />
-    <option name="LAST_COMMIT_MESSAGE" value="Developed manu part" />
+    <MESSAGE value="Developed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Developed" />
   </component>
 </project>

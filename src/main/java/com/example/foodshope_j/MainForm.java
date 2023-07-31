@@ -81,6 +81,8 @@ public class MainForm implements Initializable {
     @FXML
     private TableColumn<CustomerData, String> customer_table_date;
 
+
+
     @FXML
     private TableColumn<CustomerData, String> customer_table_total;
 
@@ -127,6 +129,9 @@ public class MainForm implements Initializable {
     private TableColumn<ProductData, String> inventory_date;
 
     @FXML
+    private TableColumn<ProductData, String> inventory_category;
+
+    @FXML
     private TableView<ProductData> inventory_table_view;
 
     @FXML
@@ -158,6 +163,10 @@ public class MainForm implements Initializable {
 
     @FXML
     private ComboBox<?> status;
+
+
+    @FXML
+    private ComboBox<?> category_item;
 
     @FXML
     private TextField stoke;
@@ -230,6 +239,15 @@ public class MainForm implements Initializable {
     @FXML
     private Button update_catogory;
 
+    @FXML
+    private TableColumn<CategoryData, String> table_category_id;
+
+    @FXML
+    private TableColumn<CategoryData, String> table_category_name;
+
+    @FXML
+    private TableView<CategoryData> category_table_view;
+
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -237,6 +255,8 @@ public class MainForm implements Initializable {
     private ResultSet result;
 
     private Alert alert;
+
+
 
 
     public void dashboardDisplayNC() {
@@ -373,7 +393,7 @@ public class MainForm implements Initializable {
 
         if(product_id.getText().isEmpty() || product_name.getText().isEmpty() || type.getSelectionModel().getSelectedItem() == null
         || stoke.getText().isEmpty() || price.getText().isEmpty() || status.getSelectionModel().getSelectedItem() == null||
-            UserData.path == null){
+            UserData.path == null || category_item.getSelectionModel().getSelectedItem() == null){
 
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
@@ -403,9 +423,9 @@ public class MainForm implements Initializable {
                 }else{
 
                     String insertData = "INSERT INTO product" +
-                            "(prod_id, prod_name, type, stock, price, status, image,date)" +
-                            "VALUES(?,?,?,?,?,?,?,?)";
-
+                            "(prod_id, prod_name, type, stock, price, status, image,date,category_id)" +
+                            "VALUES(?,?,?,?,?,?,?,?,?)";
+                    getCategoryID();
                     prepare = connect.prepareStatement(insertData);
                     prepare.setString(1, product_id.getText());
                     prepare.setString(2, product_name.getText());
@@ -423,6 +443,7 @@ public class MainForm implements Initializable {
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
                     prepare.setString(8, String.valueOf((sqlDate)));
+                    prepare.setString(9,UserData.itemID);
 
                     prepare.executeUpdate();
 
@@ -436,6 +457,7 @@ public class MainForm implements Initializable {
 
                     inventoryShowData();
                     inventoryClearBtn();
+
 
 
 
@@ -504,13 +526,9 @@ public class MainForm implements Initializable {
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
 
-                    //inventoryShowData();
+                    categoryShowData();
                     categoryClear();
-
-
-
-
-
+                    showCategoryOnInventory();
 
                 }
 
@@ -532,7 +550,7 @@ public class MainForm implements Initializable {
 
         if(product_id.getText().isEmpty() || product_name.getText().isEmpty() || type.getSelectionModel().getSelectedItem() == null
                 || stoke.getText().isEmpty() || price.getText().isEmpty() || status.getSelectionModel().getSelectedItem() == null||
-                UserData.path == null || UserData.id == 0){
+                UserData.path == null || UserData.id == 0 || category_item.getSelectionModel().getSelectedItem() == null){
 
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
@@ -544,7 +562,7 @@ public class MainForm implements Initializable {
 
             String path = UserData.path;
             path = path.replace("\\","\\\\");
-
+            getCategoryID();
             String updateDate = "UPDATE product SET "
                     +"prod_id = '"+ product_id.getText()+"',prod_name ='"
                     + product_name.getText()+"', type='"
@@ -553,7 +571,7 @@ public class MainForm implements Initializable {
                     +price.getText()+"',status='"
                     +status.getSelectionModel().getSelectedItem()+"',image='"
                     +path+"', date ='"
-                    +UserData.date+"' WHERE id = " + UserData.id;
+                    +UserData.date+"', category_id='"+UserData.itemID+"' WHERE id = " + UserData.id;
 
             connect = ConnectionShopp.ConnectionDB();
 
@@ -612,9 +630,9 @@ public class MainForm implements Initializable {
 
 
 
-            String updateDate = "UPDATE product SET "
-                    +"p = '"+ product_id.getText()+"',prod_name ='"
-                    + product_name.getText()+"', WHERE id = " + UserData.id;
+            String updateDate = "UPDATE category SET "
+                    +"category_id = '"+ category_id.getText()+"',category_name ='"
+                    + category_name.getText()+"' WHERE id = " + UserData.CatID;
 
             connect = ConnectionShopp.ConnectionDB();
 
@@ -623,7 +641,7 @@ public class MainForm implements Initializable {
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to UPDATE product ID:" + product_id.getText()+"?");
+                alert.setContentText("Are you sure you want to UPDATE product ID:" + category_id.getText()+"?");
                 Optional<ButtonType> optional = alert.showAndWait();
 
                 if(optional.get().equals(ButtonType.OK)){
@@ -637,8 +655,9 @@ public class MainForm implements Initializable {
                     alert.setContentText("Successfully Updated!");
                     alert.showAndWait();
 
-                    inventoryShowData();
-                    inventoryClearBtn();
+                    categoryShowData();
+                    categoryClear();
+                    showCategoryOnInventory();
                 }else{
 
                     alert = new Alert(Alert.AlertType.ERROR);
@@ -715,6 +734,61 @@ public class MainForm implements Initializable {
 
     }
 
+    public  void categoryDelete(){
+        if(UserData.CatID == 0){
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        }else{
+
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to DELETE product ID:" + category_id.getText()+"?");
+            Optional<ButtonType> optional = alert.showAndWait();
+
+            if(optional.get().equals(ButtonType.OK)){
+
+                String deleteData = "DELETE FROM category WHERE id = " + UserData.CatID;
+
+                try {
+                    prepare = connect.prepareStatement(deleteData);
+                    prepare.executeUpdate();
+
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted");
+
+
+                   categoryShowData();
+                   categoryClear();
+                   showCategoryOnInventory();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }else {
+
+
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Cancelled");
+                alert.showAndWait();
+
+            }
+
+
+
+        }
+    }
+
     public  void inventorySelectData(){
 
         ProductData productData = inventory_table_view.getSelectionModel().getSelectedItem();
@@ -727,6 +801,7 @@ public class MainForm implements Initializable {
         stoke.setText(String.valueOf(productData.getStock()));
         price.setText(String.valueOf(productData.getPrice()));
 
+
         UserData.path = productData.getImage();
 
         String path  = "File:" + productData.getImage();
@@ -738,6 +813,18 @@ public class MainForm implements Initializable {
         inventory_imageview.setImage(image);
 
 
+    }
+
+    public void categorySelectData(){
+        CategoryData categoryData = category_table_view.getSelectionModel().getSelectedItem();
+        int num = category_table_view.getSelectionModel().getSelectedIndex();
+
+        if(num-1<-1) return;;
+
+        category_id.setText(categoryData.getCategory_id());
+        category_name.setText(categoryData.getCategory_name());
+
+        UserData.CatID = categoryData.getId();
     }
 
     public  void inventoryClearBtn(){
@@ -794,13 +881,42 @@ public class MainForm implements Initializable {
                         result.getString("status"),
                         result.getString("image"),
                         result.getDouble("price"),
-                        result.getDate("date"));
+                        result.getDate("date"),
+                        result.getString("category_id"));
                 listData.add(prodData);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
       return  listData;
+    }
+
+    public ObservableList<CategoryData> categoryDataList(){
+
+        ObservableList<CategoryData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM category";
+
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            CategoryData categoryData;
+
+            while (result.next()){
+
+                categoryData = new CategoryData(result.getInt("id"),
+                        result.getString("category_id"),
+                        result.getString("category_name"));
+                listData.add(categoryData);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  listData;
+
     }
 
     private ObservableList<ProductData> inventoryListData;
@@ -816,19 +932,139 @@ public class MainForm implements Initializable {
         inventory_price.setCellValueFactory(new PropertyValueFactory<>("price"));
         inventory_satus.setCellValueFactory(new PropertyValueFactory<>("status"));
         inventory_date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        inventory_category.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+
 
         inventory_table_view.setItems(inventoryListData);
     }
 
+    private  ObservableList<CategoryData> categoryListData;
+    public void categoryShowData(){
+        categoryListData = categoryDataList();
 
-    private String[] typeList2 = {"P001", "P002","P003"};
-    public void catagoriesList(){
+        table_category_id.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        table_category_name.setCellValueFactory(new PropertyValueFactory<>("category_name"));
+
+        category_table_view.setItems(categoryListData);
+
+
+
+    }
+
+
+    public void categoriesList(){
+
+        List<String> itemList = new ArrayList<>();
+
+        String sql = "SELECT * FROM category";
+
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            CategoryData categoryData;
+
+            while (result.next()){
+
+                String itemName = result.getString("category_name");
+                itemList.add(itemName);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
 
 
-        ObservableList listData = FXCollections.observableArrayList(typeList2);
+        ObservableList listData = FXCollections.observableArrayList(itemList);
         filter_list.setItems(listData);
+    }
+
+    public void showCategoryOnInventory(){
+
+       List<String> itemList = new ArrayList<>();
+
+        String sql = "SELECT * FROM category";
+
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            CategoryData categoryData;
+
+            while (result.next()){
+
+                String itemName = result.getString("category_name");
+                itemList.add(itemName);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(itemList);
+        category_item.setItems(listData);
+
+
+    }
+
+    public void getCategoryID(){
+
+        String itemID = null;
+
+        String sql = "SELECT category_id FROM category where category_name = '"+category_item.getSelectionModel().getSelectedItem()+"'";
+
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+
+
+            while (result.next()){
+
+                itemID = result.getString("category_id");
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        UserData.itemID = itemID;
+        //System.out.println(UserData.itemID);
+
+    }
+
+    public void getCategoryFilterId(){
+        String itemID = null;
+
+        String sql = "SELECT category_id FROM category where category_name = '"+filter_list.getSelectionModel().getSelectedItem()+"'";
+
+        connect = ConnectionShopp.ConnectionDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+
+
+            while (result.next()){
+
+                itemID = result.getString("category_id");
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        UserData.itemID = itemID;
+        //System.out.println(UserData.itemID);
     }
 
     private String[] typeList = {"Meals", "Drinks"};
@@ -990,6 +1226,9 @@ public class MainForm implements Initializable {
             inventoryTypeList();
             inventoryStatusList();
             inventoryShowData();
+            showCategoryOnInventory();
+
+
 
         } else if (event.getSource() == menu_btn) {
             dashbord_form.setVisible(false);
@@ -999,7 +1238,7 @@ public class MainForm implements Initializable {
             DisplayMenuCard();
             menuDisplayTotal();
             menuShowOrderData();
-            catagoriesList();
+            categoriesList();
 
         }else if(event.getSource() == customer_btn){
             dashbord_form.setVisible(false);
@@ -1067,6 +1306,7 @@ public class MainForm implements Initializable {
                                        result.getString("image"),
                                        result.getDouble("price"),
                                        result.getDate("date")
+
                                        );
                 listData.add(prod);
             }
@@ -1300,8 +1540,9 @@ public void menuReceiptBtn(){
 
     public ObservableList<ProductData> menuFilter(){
 
+        getCategoryFilterId();
 
-        String sql = "SELECT * FROM product WHERE prod_id = '"+filter_list.getSelectionModel().getSelectedItem()+"'";
+        String sql = "SELECT * FROM product WHERE category_id = '"+UserData.itemID+"'";
 
 
         ObservableList<ProductData> filterData = FXCollections.observableArrayList();
@@ -1414,6 +1655,7 @@ public void menuReceiptBtn(){
         inventoryTypeList();
         inventoryStatusList();
         inventoryShowData();
+        categoryShowData();
         DisplayMenuCard();
 
         menuGetOrder();
@@ -1429,6 +1671,10 @@ public void menuReceiptBtn(){
         dashboardNSP();
         dashboardCustomerChart();
         dashboardIncomeChart();
+
+        categoriesList();
+
+
 
 
 
